@@ -30,6 +30,6 @@ func main() {
 	if user == "root" || is_sudoer {
 		cmd.Execute()
 	} else {
-		fmt.Println("Please, run this command as root or sudo")
+		fmt.Println("Please, run this command as root or sudo...")
 	}
 }
