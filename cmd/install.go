@@ -1,5 +1,5 @@
 /*
-Copyright © 2020 NAME HERE <EMAIL ADDRESS>
+Copyright © 2020 ILKI - ILKILABS agorakube@ilki.fr
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -37,16 +37,17 @@ to quickly create a Cobra application.`,
 		if runtime.GOOS == "windows" {
 			fmt.Println("Can't Execute this on a windows machine...")
 		} else {
-			if _, err := os.Stat("/etc/agorakube"); os.IsNotExist(err) {
-				out, err := exec.Command("git", "clone", "https://github.com/ilkilab/agorakube.git", "/etc/agorakube").Output()
+			path, _:= cmd.Flags().GetString("path")
+			if _, err := os.Stat(path); os.IsNotExist(err) {
+				out, err := exec.Command("git", "clone", "https://github.com/ilkilab/agorakube.git", path ).Output()
 				if err != nil {
-					fmt.Printf("%s", err)
+					fmt.Printf("Error : %s", err)
 				}
 		
 				output := string(out[:])
 				fmt.Println(output)
 			} else {
-				fmt.Println("Agorakube is already installed...")
+				fmt.Printf("Agorakube is already installed in %+v directory ...\n", path)
 			}
 		}
 	},
@@ -54,7 +55,6 @@ to quickly create a Cobra application.`,
 
 func init() {
 	rootCmd.AddCommand(installCmd)
-
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
@@ -63,5 +63,5 @@ func init() {
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// installCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	installCmd.Flags().StringP("path", "p", "/etc/agorakube", "Path where agorakube will be installed")
 }
