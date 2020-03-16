@@ -15,8 +15,21 @@ limitations under the License.
 */
 package main
 
-import "./cmd"
+import (
+	"./cmd"
+	"os"
+	"fmt"
+)
+
 
 func main() {
-	cmd.Execute()
+	user, present := os.LookupEnv("USER")
+	sudo_user, is_sudoer := os.LookupEnv("SUDO_USER")
+	_ = present
+	_ = sudo_user
+	if user == "root" || is_sudoer {
+		cmd.Execute()
+	} else {
+		fmt.Println("Please, run this command as root or sudo")
+	}
 }

@@ -17,10 +17,10 @@ package cmd
 
 import (
 	"fmt"
-	"os"
-    "os/exec"
-    "runtime"
 	"github.com/spf13/cobra"
+	"os"
+	"os/exec"
+	"runtime"
 )
 
 // installCmd represents the install command
@@ -37,13 +37,13 @@ to quickly create a Cobra application.`,
 		if runtime.GOOS == "windows" {
 			fmt.Println("Can't Execute this on a windows machine...")
 		} else {
-			path, _:= cmd.Flags().GetString("path")
+			path, _ := cmd.Flags().GetString("path")
 			if _, err := os.Stat(path); os.IsNotExist(err) {
-				out, err := exec.Command("git", "clone", "https://github.com/ilkilab/agorakube.git", path ).Output()
+				out, err := exec.Command("git", "clone", "https://github.com/ilkilab/agorakube.git", path).Output()
 				if err != nil {
 					fmt.Printf("Error : %s", err)
 				}
-		
+
 				output := string(out[:])
 				fmt.Println(output)
 			} else {
